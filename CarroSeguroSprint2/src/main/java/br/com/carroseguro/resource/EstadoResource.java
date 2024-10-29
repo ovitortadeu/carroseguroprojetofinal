@@ -8,6 +8,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Path("/estado")
@@ -30,7 +31,7 @@ public class EstadoResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response inserir(@Valid EstadoTO estado) {
+    public Response inserir(@Valid EstadoTO estado) throws SQLException {
         EstadoTO resultado = estadoBO.inserir(estado);
         Response.ResponseBuilder response = null;
         if (resultado != null) {
@@ -44,7 +45,7 @@ public class EstadoResource {
 
 
     @PUT
-    @Path("/{idEstado}")
+    @Path("/estado")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response alterar(@Valid EstadoTO estadoTO, @PathParam("idEstado") int idEstado) {
         estadoTO.setIdEstado(idEstado);

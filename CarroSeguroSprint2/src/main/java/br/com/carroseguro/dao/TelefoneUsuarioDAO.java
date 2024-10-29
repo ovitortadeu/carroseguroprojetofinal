@@ -8,20 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class TelefoneUsuarioDAO {
-    private Connection con;
+public class TelefoneUsuarioDAO extends Repository{
 
-    public TelefoneUsuarioDAO(Connection con) {
-        this.con = con;
-    }
 
-    public Connection getCon() {
-        return con;
-    }
-
-    public String inserir(TelefoneUsuarioTO tel) {
+    public TelefoneUsuarioTO inserir(TelefoneUsuarioTO tel) {
         String sql = "insert into T_CS_TELEFONE_USUARIO(id_telefone, nr_ddi, nr_ddd, nr_telefone, tp_telefone, st_telefone, t_cs_usuario_id_usuario) values(?,?,?,?,?,?,?)";
-        try (PreparedStatement ps = getCon().prepareStatement(sql);) {
+        try (PreparedStatement ps = getConnection().prepareStatement(sql);) {
             ps.setInt(1, tel.getIdTelefone());
             ps.setInt(2, tel.getNrDDI());
             ps.setInt(3, tel.getNrDDD());
@@ -30,18 +22,19 @@ public class TelefoneUsuarioDAO {
             ps.setString(6, tel.getStTelefone());
             ps.setInt(7, tel.getIdUsuario());
             if (ps.executeUpdate() > 0) {
-                return "Inserido com sucesso";
-            } else {
-                return "Erro ao inserir";
+                return tel;
             }
         } catch (SQLException e) {
-            return "Erro de SQL: " + e.getMessage();
+            System.out.println("Erro de SQL: " + e.getMessage());;
+        } finally {
+            closeConnection();
         }
+        return null;
     }
 
-    public String alterar(TelefoneUsuarioTO tel) {
+    public TelefoneUsuarioTO alterar(TelefoneUsuarioTO tel) {
         String sql = "update T_CS_TELEFONE_USUARIO set nr_ddi=?, nr_ddd=?, nr_telefone=?, tp_telefone=?, st_telefone=?, id_usuario=?  where id_telefone=?";
-        try (PreparedStatement ps = getCon().prepareStatement(sql);) {
+        try (PreparedStatement ps = getConnection().prepareStatement(sql);) {
             ps.setInt(1, tel.getNrDDI());
             ps.setInt(2, tel.getNrDDD());
             ps.setInt(3, tel.getNrTelefone());
@@ -50,33 +43,33 @@ public class TelefoneUsuarioDAO {
             ps.setInt(6, tel.getIdUsuario());
             ps.setInt(7, tel.getIdTelefone());
             if (ps.executeUpdate() > 0) {
-                return "Alterado com sucesso";
-            } else {
-                return "Erro ao alterar";
+                return tel;
             }
         } catch (SQLException e) {
-            return "Erro de SQL: " + e.getMessage();
+            System.out.println("Erro de SQL: " + e.getMessage());;
+        } finally {
+            closeConnection();
         }
+        return null;
     }
 
-    public String excluir(TelefoneUsuarioTO tel) {
+    public boolean excluir(int idTelefoneUsuario) {
         String sql = "delete from T_CS_TELEFONE_USUARIO where id_telefone=?";
-        try (PreparedStatement ps = getCon().prepareStatement(sql);) {
-            ps.setInt(1, tel.getIdTelefone());
-            if (ps.executeUpdate() > 0) {
-                return "Excluído com sucesso";
-            } else {
-                return "Erro ao deletar";
-            }
+        try (PreparedStatement ps = getConnection().prepareStatement(sql);){
+            ps.setInt(1, idTelefoneUsuario);
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            return "Erro de SQL: " + e.getMessage();
+            System.out.println("Erro de SQL ao excluir: " + e.getMessage());
+        } finally {
+            closeConnection();
         }
+        return false;
     }
 
     public ArrayList<TelefoneUsuarioTO> listarTodos() {
         String sql = "select * from T_CS_TELEFONE_USUARIO order by id_telefone";
         ArrayList<TelefoneUsuarioTO> listaTelefones = new ArrayList<TelefoneUsuarioTO>();
-        try (PreparedStatement ps = getCon().prepareStatement(sql);) {
+        try (PreparedStatement ps = getConnection().prepareStatement(sql);) {
             ResultSet rs = ps.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -99,9 +92,9 @@ public class TelefoneUsuarioDAO {
         }
     }
 
-    public int obterNovoIdTelefone(Connection con) throws SQLException {
+    public int obterNovoIdTelefone(TelefoneUsuarioTO telTO) throws SQLException {
         String sql = "SELECT MAX(id_usuario) FROM T_CS_TELEFONE_USUARIO";
-        PreparedStatement stmt = con.prepareStatement(sql);
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
             return rs.getInt(1) + 1;

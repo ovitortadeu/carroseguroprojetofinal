@@ -20,7 +20,7 @@ public class EstadoDAO extends Repository {
                 return estadoTO;
             }
         } catch (SQLException e) {
-            System.out.println("Erro de SQL: " + e.getMessage());
+            System.out.println("Erro de SQL ao inserir: " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -38,7 +38,7 @@ public class EstadoDAO extends Repository {
                 return null;
             }
         } catch(SQLException e) {
-            System.out.println("Erro de SQL: " + e.getMessage());;
+            System.out.println("Erro de SQL ao alterar: " + e.getMessage());;
         } finally {
             closeConnection();
         }
@@ -50,7 +50,7 @@ public class EstadoDAO extends Repository {
             ps.setInt(1, idEstado);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            System.out.println("Erro de SQL: " + e.getMessage());
+            System.out.println("Erro de SQL ao excluir: " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -81,9 +81,9 @@ public class EstadoDAO extends Repository {
         return listaEstadoTO;
     }
 
-    public int obterNovoIdEstado(Connection con) throws SQLException {
+    public int obterNovoIdEstado(EstadoTO estadoTO) throws SQLException {
         String sql = "SELECT MAX(id_estado) FROM T_CS_ESTADO";
-        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+        try (PreparedStatement stmt = getConnection().prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1) + 1;
@@ -91,7 +91,7 @@ public class EstadoDAO extends Repository {
                 return 1;
             }
         } catch (SQLException e) {
-            System.out.println("Erro de SQL: " + e.getMessage());
+            System.out.println("Erro de SQL ao obter novo id: " + e.getMessage());
         }
         return 0;
     }

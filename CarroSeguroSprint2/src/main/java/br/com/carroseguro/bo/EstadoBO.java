@@ -2,6 +2,8 @@ package br.com.carroseguro.bo;
 
 import br.com.carroseguro.dao.EstadoDAO;
 import br.com.carroseguro.to.EstadoTO;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -75,8 +77,9 @@ public class EstadoBO {
      * @param estadoTO objeto contendo os dados do estado a ser inserido (nome e sigla)
      * @return o objeto {@code EstadoTO} inserido no banco de dados, ou {@code null} se a validação falhar
      */
-    public EstadoTO inserir(EstadoTO estadoTO) {
+    public EstadoTO inserir(EstadoTO estadoTO) throws SQLException {
         estadoDAO = new EstadoDAO();
+        estadoTO.setIdEstado(estadoDAO.obterNovoIdEstado(estadoTO));
         try {
             if (validarEstadoESigla(estadoTO)) {
                 return estadoDAO.inserir(estadoTO);

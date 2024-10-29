@@ -14,7 +14,7 @@ public class ProblemasTO {
     private int idProblema;
 
     @PositiveOrZero // Substitui @NotNull pois um problema pode ter valor zero ou positivo.
-    private int vl_problema;
+    private int vlProblema;
 
     @NotBlank // Nome não pode ser vazio ou nulo, semelhante ao atributo 'nome' do exemplo.
     private String nmProblema;
@@ -30,9 +30,9 @@ public class ProblemasTO {
     public ProblemasTO() {
     }
 
-    public ProblemasTO(int idProblema, int vl_problema, String nmProblema, String tpPecaProblema, String dcProblema, int idCarro) {
+    public ProblemasTO(int idProblema, int vlProblema, String nmProblema, String tpPecaProblema, String dcProblema, int idCarro) {
         this.idProblema = idProblema;
-        this.vl_problema = vl_problema;
+        this.vlProblema = vlProblema;
         this.nmProblema = nmProblema;
         this.tpPecaProblema = tpPecaProblema;
         this.dcProblema = dcProblema;
@@ -47,12 +47,12 @@ public class ProblemasTO {
         this.idProblema = idProblema;
     }
 
-    public int getVl_problema() {
-        return vl_problema;
+    public int getVlProblema() {
+        return vlProblema;
     }
 
-    public void setVl_problema(int vl_problema) {
-        this.vl_problema = vl_problema;
+    public void setVlProblema(int vlProblema) {
+        this.vlProblema = vlProblema;
     }
 
     public String getNmProblema() {
@@ -87,68 +87,7 @@ public class ProblemasTO {
         this.idCarro = idCarro;
     }
 
-    public ArrayList<String> gerarProblemaPeca() {
-        ArrayList<String> pecas = new ArrayList<>();
-        pecas.add("Bateria");
-        pecas.add("Velas de ignição");
-        pecas.add("Freios");
-        pecas.add("Embreagem");
-        pecas.add("Suspensão");
 
-        return pecas;
-    }
-
-    public double gerarProblemaValor(String peca) {
-
-        double resultado = 0;
-        if (tpPecaProblema.equalsIgnoreCase("Suspensão")) {
-            Random r = new Random();
-
-            double randomDouble = r.nextDouble();
-            double min = 5000;
-            double max = 7000;
-
-            double result = min + (max - min) * randomDouble;
-            resultado = Math.round(result * 100.0) / 100.0;
-        } else if (tpPecaProblema.equalsIgnoreCase("Bateria")) {
-            Random r = new Random();
-
-            double randomDouble = r.nextDouble();
-            double min = 1500;
-            double max = 2800;
-
-            double result = min + (max - min) * randomDouble;
-            resultado = Math.round(result * 100.0) / 100.0;
-        } else if (tpPecaProblema.equalsIgnoreCase("Embreagem")) {
-            Random r = new Random();
-
-            double randomDouble = r.nextDouble();
-            double min = 4000;
-            double max = 6000;
-
-            double result = min + (max - min) * randomDouble;
-            resultado = Math.round(result * 100.0) / 100.0;
-        } else if (tpPecaProblema.equalsIgnoreCase("Freios")) {
-            Random r = new Random();
-
-            double randomDouble = r.nextDouble();
-            double min = 2500;
-            double max = 4000;
-
-            double result = min + (max - min) * randomDouble;
-            resultado = Math.round(result * 100.0) / 100.0;
-        } else if (tpPecaProblema.equalsIgnoreCase("Velas de ignição")) {
-            Random r = new Random();
-
-            double randomDouble = r.nextDouble();
-            double min = 500;
-            double max = 2000;
-
-            double result = min + (max - min) * randomDouble;
-            resultado = Math.round(result * 100.0) / 100.0;
-        }
-        return resultado;
-    }
 
 
 

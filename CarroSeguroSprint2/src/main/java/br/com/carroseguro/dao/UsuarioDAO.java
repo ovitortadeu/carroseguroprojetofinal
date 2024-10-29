@@ -9,72 +9,61 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class UsuarioDAO {
-    private Connection con;
+public class UsuarioDAO extends Repository{
 
-    public UsuarioDAO(Connection con) {
-        this.con = con;
-    }
-    public Connection getCon() {
-        return con;
-    }
-
-    public String inserir(UsuarioTO usuarioTO) {
+    public UsuarioTO inserir(UsuarioTO usuarioTO) {
         String sql = "INSERT INTO T_CS_USUARIO(id_usuario, us_cpf, nm_usuario, em_usuario, sn_usuario) VALUES(?,?,?,?,?)";
-        try (PreparedStatement ps = getCon().prepareStatement(sql)) {
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ps.setInt(1, usuarioTO.getIdUsuario());
             ps.setBigDecimal(2, new BigDecimal(usuarioTO.getUsCPF()));
             ps.setString(3, usuarioTO.getNmUsuario());
             ps.setString(4, usuarioTO.getEmailUsuario());
             ps.setString(5, usuarioTO.getSenhaUsuario());
-
-            // Log para depuração
-            System.out.println("Executando a query: " + ps.toString());
-
             if (ps.executeUpdate() > 0) {
-                return "Inserido com sucesso";
-            } else {
-                return "Erro ao inserir";
+                return usuarioTO;
             }
         } catch (SQLException e) {
-            return "Erro de SQL: " + e.getMessage();
+            System.out.println("Erro de SQL: " + e.getMessage());;
+        } finally {
+            closeConnection();
         }
+        return null;
     }
 
-    public String alterar(UsuarioTO usuarioTO) {
+    public UsuarioTO alterar(UsuarioTO usuarioTO) {
         String sql = "update T_CS_USUARIO set nm_usuario=?, us_cpf=?, em_usuario, sn_usuario where id_usuario=?";
-        try (PreparedStatement ps = getCon().prepareStatement(sql);) {
+        try (PreparedStatement ps = getConnection().prepareStatement(sql);) {
             ps.setString(1, usuarioTO.getNmUsuario());;
             ps.setLong(2, usuarioTO.getUsCPF());
             ps.setString(3, usuarioTO.getEmailUsuario());
             ps.setString(4, usuarioTO.getSenhaUsuario());
             ps.setInt(1, usuarioTO.getIdUsuario());
             if (ps.executeUpdate() > 0) {
-                return "Alterado com sucesso";
-            } else {
-                return "Erro ao alterar";
+                return usuarioTO;
             }
         } catch(SQLException e) {
-            return "Erro de SQL: " + e.getMessage();
+            System.out.println("Erro de SQL: " + e.getMessage());;
+        } finally {
+            closeConnection();
         }
+        return null;
     }
-    public String excluir(UsuarioTO usuarioTO) {
+    public boolean excluir(int idUsuario) {
         String sql = "delete from T_CS_USUARIO where id_usuario=?";
-        try (PreparedStatement ps = getCon().prepareStatement(sql);){
-            ps.setInt(1, usuarioTO.getIdUsuario());
-            if (ps.executeUpdate() > 0) {
-                return "Excluído com sucesso";
-            } else {
-                return "Erro ao deletar";
-            }
+        try (PreparedStatement ps = getConnection().prepareStatement(sql);){
+            ps.setInt(1, idUsuario);
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            return "Erro de SQL: " + e.getMessage();
+            System.out.println("Erro de SQL ao excluir: " + e.getMessage());
+        } finally {
+            closeConnection();
         }
+        return false;
     }
     public ArrayList<UsuarioTO> listarTodos() {
         String sql = "select * from T_CS_USUARIO order by id_usuario";
         ArrayList<UsuarioTO> listaUsuarioTO = new ArrayList<UsuarioTO>();
-        try(PreparedStatement ps = getCon().prepareStatement(sql);) {
+        try(PreparedStatement ps = getConnection().prepareStatement(sql);) {
             ResultSet rs = ps.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -96,9 +85,9 @@ public class UsuarioDAO {
         }
     }
 
-    public int obterNovoIdUsuario(Connection con) throws SQLException {
+    public int obterNovoIdUsuario(UsuarioTO usuarioTO) throws SQLException {
         String sql = "SELECT MAX(id_usuario) FROM T_CS_USUARIO";
-        PreparedStatement stmt = con.prepareStatement(sql);
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
             return rs.getInt(1) + 1;

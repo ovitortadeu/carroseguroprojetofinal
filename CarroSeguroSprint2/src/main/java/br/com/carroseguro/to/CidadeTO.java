@@ -1,10 +1,17 @@
 package br.com.carroseguro.to;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+
 public class CidadeTO {
 
+    @Positive // ID da cidade deve ser positivo
     private int idCidade;
+    @NotBlank // Nome do estado não pode ser vazio ou nulo.
     private String nmCidade;
+    @Positive // Número de DDD não pode ser vazio ou nulo.
     private int nrDDD;
+    @Positive// ID da estado deve ser positivo
     private int idEstado;
 
     public CidadeTO() {

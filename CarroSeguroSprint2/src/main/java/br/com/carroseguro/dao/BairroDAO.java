@@ -7,64 +7,58 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class BairroDAO {
-    private Connection con;
+public class BairroDAO extends Repository{
 
-    public BairroDAO(Connection con) {
-        this.con = con;
-    }
-    public Connection getCon() {
-        return con;
-    }
-
-    public String inserir(BairroTO brr) {
+    public BairroTO inserir(BairroTO brr) {
         String sql = "insert into T_CS_BAIRRO(id_bairro, nm_bairro, nm_zona_bairro, t_cs_cidade_id_cidade) values(?,?,?,?)";
-        try(PreparedStatement ps = getCon().prepareStatement(sql)) {
+        try(PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ps.setInt(1, brr.getIdBairro());
             ps.setString(2, brr.getNmBairro());
             ps.setString(3, brr.getNmZonaBairro());
             ps.setInt(4, brr.getIdCidade());
             if (ps.executeUpdate() > 0) {
-                return "Inserido com sucesso";
-            } else{
-                return "Erro ao inserir";
+                return brr;
             }
         } catch (SQLException e) {
-            return "Erro de SQL: " + e.getMessage();
+            System.out.println("Erro de SQL ao inserir: " + e.getMessage());
+        } finally {
+            closeConnection();
         }
+        return null;
     }
-    public String alterar(BairroTO brr) {
+    public BairroTO alterar(BairroTO brr) {
         String sql = "update T_CS_BAIRRO set nm_bairro=?, nm_zona_bairro=? where id_bairro=?";
-        try (PreparedStatement ps = getCon().prepareStatement(sql);) {
+        try (PreparedStatement ps = getConnection().prepareStatement(sql);) {
             ps.setString(1, brr.getNmBairro());
             ps.setString(2, brr.getNmZonaBairro());
             ps.setInt(3, brr.getIdBairro());
             if (ps.executeUpdate() > 0) {
-                return "Alterado com sucesso";
-            } else {
-                return "Erro ao alterar";
+                return brr;
             }
-        } catch(SQLException e) {
-            return "Erro de SQL: " + e.getMessage();
         }
+        catch (SQLException e) {
+        System.out.println("Erro de SQL ao inserir: " + e.getMessage());
+    } finally {
+        closeConnection();
     }
-    public String excluir(BairroTO brr) {
+        return null;
+}
+    public boolean excluir(int idBairro) {
         String sql = "delete from T_CS_BAIRRO where id_bairro=?";
-        try (PreparedStatement ps = getCon().prepareStatement(sql);){
-            ps.setInt(1, brr.getIdBairro());
-            if (ps.executeUpdate() > 0) {
-                return "Excluído com sucesso";
-            } else {
-                return "Erro ao deletar";
-            }
+        try (PreparedStatement ps = getConnection().prepareStatement(sql);){
+            ps.setInt(1, idBairro);
+            return ps.executeUpdate() > 0;
         } catch (SQLException e) {
-            return "Erro de SQL: " + e.getMessage();
+            System.out.println("Erro de SQL ao excluir: " + e.getMessage());
+        } finally {
+            closeConnection();
         }
+        return false;
     }
     public ArrayList<BairroTO> listarTodos() {
         String sql = "select * from T_CS_BAIRRO order by id_bairro";
         ArrayList<BairroTO> listaBairroTO = new ArrayList<BairroTO>();
-        try(PreparedStatement ps = getCon().prepareStatement(sql);) {
+        try(PreparedStatement ps = getConnection().prepareStatement(sql);) {
             ResultSet rs = ps.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
@@ -83,9 +77,9 @@ public class BairroDAO {
             return null;
         }
     }
-    public int obterNovoIdBairro(Connection con) throws SQLException {
+    public int obterNovoIdBairro(BairroTO brr) throws SQLException {
         String sql = "SELECT MAX(id_bairro) FROM T_CS_BAIRRO";
-        PreparedStatement stmt = con.prepareStatement(sql);
+        PreparedStatement stmt = getConnection().prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
             return rs.getInt(1) + 1;

@@ -31,7 +31,7 @@ public class ConnectionFactory {
         Properties prop = new Properties();
         FileInputStream file = null;
         try {
-            file = new FileInputStream(".src/main/java/br.com.carroseguro/resources/application.properties");
+            file = new FileInputStream("./src/main/resources/application.properties");
             prop.load(file);
             String url = prop.getProperty("datasource.url");
             String user = prop.getProperty("datasource.username");
