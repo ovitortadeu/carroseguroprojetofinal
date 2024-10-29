@@ -46,7 +46,7 @@ public class TelefoneUsuarioResoure {
 
 
     @PUT
-    @Path("/telefone")
+    @Path("/{idTel}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response alterar(@Valid TelefoneUsuarioTO telTO, @PathParam("idTel") int idTel) {
         telTO.setIdTelefone(idTel);

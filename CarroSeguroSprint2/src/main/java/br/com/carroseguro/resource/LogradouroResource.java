@@ -44,7 +44,7 @@ public class LogradouroResource {
 
 
     @PUT
-    @Path("/logradouro")
+    @Path("/{idLogradouro}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response alterar(@Valid LogradouroTO logradouroTO, @PathParam("idLogradouro") int idLogradouro) {
         logradouroTO.setIdLogradouro(idLogradouro);

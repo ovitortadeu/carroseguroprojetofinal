@@ -45,7 +45,7 @@ public class EstadoResource {
 
 
     @PUT
-    @Path("/estado")
+    @Path("/{idEstado}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response alterar(@Valid EstadoTO estadoTO, @PathParam("idEstado") int idEstado) {
         estadoTO.setIdEstado(idEstado);

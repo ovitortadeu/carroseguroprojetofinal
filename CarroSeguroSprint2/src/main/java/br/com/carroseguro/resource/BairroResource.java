@@ -46,7 +46,7 @@ public class BairroResource {
 
 
     @PUT
-    @Path("/bairro")
+    @Path("/{idBairro}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response alterar(@Valid BairroTO bairroTO, @PathParam("idBairro") int idBairro) {
         bairroTO.setIdBairro(idBairro);

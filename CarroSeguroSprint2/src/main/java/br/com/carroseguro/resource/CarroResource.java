@@ -46,7 +46,7 @@ public class CarroResource {
 
 
     @PUT
-    @Path("/carro")
+    @Path("/{idCarro}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response alterar(@Valid CarroTO carroTO, @PathParam("idCarro") int idCarro) {
         carroTO.setIdCarro(idCarro);
