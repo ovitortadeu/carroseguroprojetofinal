@@ -30,14 +30,16 @@ public class UsuarioBO {
     }
 
     /**
-     * Insere um objeto {@link UsuarioTO} no banco de dados após validação.
+     * Insere um novo usuário no sistema, verificando se o email do usuário já está cadastrado.
      * <p>
-     * Este método utiliza instância de {@link UsuarioDAO} para inserir o bairro no banco de dados.
-     * Também usa o método de obter novo ID para a inserção no banco de dados.
+     * Caso o email já exista no sistema, o método não insere o usuário e retorna {@code null}.
+     * Se o email não estiver cadastrado, o método obtém um novo ID para o usuário e realiza a inserção.
      * </p>
      *
-     * @param usuarioTO O objeto {@link UsuarioTO} que contém os dados do usuário a serem inseridos.
-     * @return O objeto {@link UsuarioTO} inserido.
+     * @param usuarioTO um objeto {@link UsuarioTO} contendo as informações do usuário a ser inserido.
+     * @return o objeto {@link UsuarioTO} com o ID gerado se a inserção for bem-sucedida,
+     *         ou {@code null} se o email já estiver cadastrado.
+     * @throws SQLException se ocorrer um erro de acesso ao banco de dados durante a inserção.
      */
     public UsuarioTO inserir(UsuarioTO usuarioTO) throws SQLException {
         usuarioDAO = new UsuarioDAO();
@@ -54,10 +56,20 @@ public class UsuarioBO {
     }
 
 
-
+    /**
+     * Retorna as informações de um usuário com base no seu ID.
+     * <p>
+     * Este método consulta o banco de dados para obter os dados do usuário correspondente ao ID fornecido.
+     * Não há regras de negócios adicionais aplicadas na visualização.
+     * </p>
+     *
+     * @param idUsuario o ID do usuário que se deseja visualizar.
+     * @return um objeto {@link UsuarioTO} contendo as informações do usuário,
+     *         ou {@code null} se o usuário não for encontrado.
+     */
     public UsuarioTO vizualizarPeloCodigo (int idUsuario) {
         usuarioDAO = new UsuarioDAO();
-
+        // Sem regras de negócios relevantes para vizualização
         return usuarioDAO.vizualizarPeloCodigo(idUsuario);
     }
 
