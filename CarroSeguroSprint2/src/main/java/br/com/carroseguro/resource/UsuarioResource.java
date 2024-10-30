@@ -62,7 +62,7 @@ public class UsuarioResource {
     }
 
     @DELETE
-    @Path("/idUsuario")
+    @Path("/{idUsuario}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response excluir(@PathParam("idUsuario") int idUsuario) {
         Response.ResponseBuilder response = null;
@@ -75,7 +75,7 @@ public class UsuarioResource {
     }
 
     @GET
-    @Path("/idUsuario")
+    @Path("/{idUsuario}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response vizualizarPeloCodigo(@PathParam("idUsuario") int idUsuario) {
         UsuarioTO resultado = usuarioBO.vizualizarPeloCodigo(idUsuario);
@@ -85,6 +85,7 @@ public class UsuarioResource {
         } else {
             response = Response.status(404); // 404 NOT FOUND
         }
+        response.entity(resultado);
         return response.build();
     }
 }

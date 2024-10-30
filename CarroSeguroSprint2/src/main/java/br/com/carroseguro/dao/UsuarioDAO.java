@@ -3,7 +3,6 @@ package br.com.carroseguro.dao;
 import br.com.carroseguro.to.UsuarioTO;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,12 +22,17 @@ public class UsuarioDAO extends Repository{
                 return usuarioTO;
             }
         } catch (SQLException e) {
-            System.out.println("Erro de SQL: " + e.getMessage());;
+            if (e.getErrorCode() == 1) { // Código de erro para duplicidade em Oracle
+                System.out.println("CPF já cadastrado.");
+            } else {
+                System.out.println("Erro de SQL: " + e.getMessage());
+            }
         } finally {
             closeConnection();
         }
         return null;
     }
+
 
     public UsuarioTO alterar(UsuarioTO usuarioTO) {
         String sql = "update T_CS_USUARIO set nm_usuario=?, us_cpf=?, em_usuario, sn_usuario where id_usuario=?";
@@ -118,20 +122,19 @@ public class UsuarioDAO extends Repository{
         }
     }
 
-    public boolean verificarEmailSenha(UsuarioTO usuario) {
-        String sql = "SELECT 1 FROM T_CS_USUARIO WHERE em_usuario = ? AND sn_usuario = ?";
+    public boolean emailExistente(String email) {
+        String sql = "SELECT 1 FROM T_CS_USUARIO WHERE em_usuario = ?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
-            ps.setString(1, usuario.getEmailUsuario());
-            ps.setString(2, usuario.getSenhaUsuario());
-
+            ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery()) {
-                return rs.next();
+                return rs.next();  // Retorna true se encontrar o email
             }
         } catch (SQLException e) {
-            System.out.println("Erro de SQL: " + e.getMessage());;
+            System.out.println("Erro ao verificar email: " + e.getMessage());
         }
         return false;
     }
+
 
 }
 

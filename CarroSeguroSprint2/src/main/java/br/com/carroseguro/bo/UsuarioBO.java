@@ -41,16 +41,18 @@ public class UsuarioBO {
      */
     public UsuarioTO inserir(UsuarioTO usuarioTO) throws SQLException {
         usuarioDAO = new UsuarioDAO();
-        usuarioTO.setIdUsuario(usuarioDAO.obterNovoIdUsuario(usuarioTO));
-        try {
-            if (usuarioDAO.verificarEmailSenha(usuarioTO)) {
-                return usuarioDAO.inserir(usuarioTO);
-            }
-        } catch (Exception e ) {
-            System.out.println("Erro geral: " + e.getMessage());
+
+        // Verifica se o email já está cadastrado
+        if (usuarioDAO.emailExistente(usuarioTO.getEmailUsuario())) {
+            System.out.println("Email já cadastrado!");
+            return null;
         }
-    return null;
+
+        // Obtem novo ID e insere o usuário
+        usuarioTO.setIdUsuario(usuarioDAO.obterNovoIdUsuario(usuarioTO));
+        return usuarioDAO.inserir(usuarioTO);
     }
+
 
 
     public UsuarioTO vizualizarPeloCodigo (int idUsuario) {
