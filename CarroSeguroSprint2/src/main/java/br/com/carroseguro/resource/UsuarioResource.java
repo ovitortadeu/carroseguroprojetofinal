@@ -12,6 +12,7 @@ import jakarta.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+@Path("/usuario")
 public class UsuarioResource {
     private UsuarioBO usuarioBO = new UsuarioBO();
 

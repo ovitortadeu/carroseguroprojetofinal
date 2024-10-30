@@ -96,7 +96,20 @@ public class UsuarioDAO extends Repository{
         }
     }
 
+    public boolean verificarEmailSenha(UsuarioTO usuario) {
+        String sql = "SELECT 1 FROM T_CS_USUARIO WHERE em_usuario = ? AND sn_usuario = ?";
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
+            ps.setString(1, usuario.getEmailUsuario());
+            ps.setString(2, usuario.getSenhaUsuario());
 
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro de SQL: " + e.getMessage());;
+        }
+        return false;
+    }
 
 }
 

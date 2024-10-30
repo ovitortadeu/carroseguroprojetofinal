@@ -42,9 +42,16 @@ public class UsuarioBO {
     public UsuarioTO inserir(UsuarioTO usuarioTO) throws SQLException {
         usuarioDAO = new UsuarioDAO();
         usuarioTO.setIdUsuario(usuarioDAO.obterNovoIdUsuario(usuarioTO));
-        return usuarioDAO.inserir(usuarioTO);
-
+        try {
+            if (usuarioDAO.verificarEmailSenha(usuarioTO)) {
+                return usuarioDAO.inserir(usuarioTO);
+            }
+        } catch (Exception e ) {
+            System.out.println("Erro geral: " + e.getMessage());
+        }
+    return null;
     }
+
 
     /**
      * Exclui um usuário do banco de dados com base no seu ID.
