@@ -73,4 +73,18 @@ public class UsuarioResource {
         }
         return response.build();
     }
+
+    @GET
+    @Path("/idUsuario")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response vizualizarPeloCodigo(@PathParam("idUsuario") int idUsuario) {
+        UsuarioTO resultado = usuarioBO.vizualizarPeloCodigo(idUsuario);
+        Response.ResponseBuilder response = null;
+        if(resultado!=null) {
+            response = Response.ok(); // 200 OK
+        } else {
+            response = Response.status(404); // 404 NOT FOUND
+        }
+        return response.build();
+    }
 }

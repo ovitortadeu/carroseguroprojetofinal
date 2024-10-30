@@ -60,6 +60,28 @@ public class UsuarioDAO extends Repository{
         }
         return false;
     }
+    public UsuarioTO vizualizarPeloCodigo(int idUsuario) {
+        UsuarioTO user = new UsuarioTO();
+        String sql = "select * from T_CS_USUARIO where id_usuario=?";
+        try (PreparedStatement ps = getConnection().prepareStatement(sql);){
+            ps.setInt(1, idUsuario);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                user.setIdUsuario(rs.getInt("id_usuario"));
+                user.setUsCPF(rs.getLong("us_cpf"));
+                user.setNmUsuario(rs.getString("nm_usuario"));
+                user.setEmailUsuario(rs.getString("em_usuario"));
+                user.setSenhaUsuario(rs.getString("sn_usuario"));
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro de SQL ao mostrar usuário: " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return user;
+    }
     public ArrayList<UsuarioTO> listarTodos() {
         String sql = "select * from T_CS_USUARIO order by id_usuario";
         ArrayList<UsuarioTO> listaUsuarioTO = new ArrayList<UsuarioTO>();

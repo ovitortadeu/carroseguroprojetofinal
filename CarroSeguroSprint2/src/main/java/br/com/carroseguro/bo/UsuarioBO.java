@@ -53,6 +53,12 @@ public class UsuarioBO {
     }
 
 
+    public UsuarioTO vizualizarPeloCodigo (int idUsuario) {
+        usuarioDAO = new UsuarioDAO();
+
+        return usuarioDAO.vizualizarPeloCodigo(idUsuario);
+    }
+
     /**
      * Exclui um usuário do banco de dados com base no seu ID.
      *
