@@ -18,72 +18,56 @@ public class UsuarioResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarTodos() {
         ArrayList<UsuarioTO> resultado = usuarioBO.listarTodos();
-        Response.ResponseBuilder response = null;
         if (resultado != null) {
-            response = Response.ok(); // 200 (OK)
+            return Response.ok(resultado).build(); // 200 OK com a lista de usuários
         } else {
-            response = Response.status(404); // 404 (NOT FOUND)
+            return Response.status(404).entity("Usuários não encontrados").build(); // 404 NOT FOUND
         }
-        response.entity(resultado);
-        return response.build();
     }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response inserir(@Valid UsuarioTO usuario) throws SQLException {
         UsuarioTO resultado = usuarioBO.inserir(usuario);
-        Response.ResponseBuilder response = null;
         if (resultado != null) {
-            response = Response.created(null); //201 CREATED
-        } else{
-            response = Response.status(400); // BAD REQUEST
+            return Response.created(null).entity(resultado).build(); // 201 CREATED com o usuário criado
+        } else {
+            return Response.status(400).entity("Erro ao inserir usuário").build(); // 400 BAD REQUEST
         }
-        response.entity(resultado);
-        return response.build();
     }
 
-
     @PUT
-    @Path("/usuario/{idUsuario}")
+    @Path("/{idUsuario}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response alterar(@Valid UsuarioTO usuarioTO, @PathParam("idUsuario") int idUsuario) {
         usuarioTO.setIdUsuario(idUsuario);
         UsuarioTO resultado = usuarioBO.alterar(usuarioTO);
-        Response.ResponseBuilder response = null;
         if (resultado != null) {
-            response = Response.created(null); // 201 CREATED
-        } else{
-            response = Response.status(400); // 400 BAD REQUEST
+            return Response.ok(resultado).build(); // 200 OK com o usuário atualizado
+        } else {
+            return Response.status(400).entity("Erro ao atualizar usuário").build(); // 400 BAD REQUEST
         }
-        response.entity(resultado);
-        return response.build();
     }
 
     @DELETE
-    @Path("/usuario/{idUsuario}")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{idUsuario}")
     public Response excluir(@PathParam("idUsuario") int idUsuario) {
-        Response.ResponseBuilder response = null;
-        if(usuarioBO.excluir(idUsuario)) {
-            response = Response.status(204); // 204 NO CONTENT
+        if (usuarioBO.excluir(idUsuario)) {
+            return Response.status(204).build(); // 204 NO CONTENT
         } else {
-            response = Response.status(404); // 404 NOT FOUND
+            return Response.status(404).entity("Usuário não encontrado").build(); // 404 NOT FOUND
         }
-        return response.build();
     }
 
     @GET
-    @Path("/usuario/{idUsuario}")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/{idUsuario}")
+    @Produces(MediaType.APPLICATION_JSON)
     public Response vizualizarPeloCodigo(@PathParam("idUsuario") int idUsuario) {
         UsuarioTO resultado = usuarioBO.vizualizarPeloCodigo(idUsuario);
-        Response.ResponseBuilder response = null;
-        if(resultado!=null) {
-            response = Response.ok(); // 200 OK
+        if (resultado != null) {
+            return Response.ok(resultado).build(); // 200 OK com o usuário encontrado
         } else {
-            response = Response.status(404); // 404 NOT FOUND
+            return Response.status(404).entity("Usuário não encontrado").build(); // 404 NOT FOUND
         }
-        response.entity(resultado);
-        return response.build();
     }
 }

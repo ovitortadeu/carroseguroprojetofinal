@@ -86,6 +86,7 @@ public class UsuarioDAO extends Repository{
         }
         return user;
     }
+
     public ArrayList<UsuarioTO> listarTodos() {
         String sql = "select * from T_CS_USUARIO order by id_usuario";
         ArrayList<UsuarioTO> listaUsuarioTO = new ArrayList<UsuarioTO>();
