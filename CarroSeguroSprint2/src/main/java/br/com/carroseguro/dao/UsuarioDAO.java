@@ -35,13 +35,13 @@ public class UsuarioDAO extends Repository{
 
 
     public UsuarioTO alterar(UsuarioTO usuarioTO) {
-        String sql = "update T_CS_USUARIO set nm_usuario=?, us_cpf=?, em_usuario, sn_usuario where id_usuario=?";
+        String sql = "update T_CS_USUARIO set nm_usuario=?, us_cpf=?, em_usuario=?, sn_usuario=? where id_usuario=?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql);) {
             ps.setString(1, usuarioTO.getNmUsuario());;
             ps.setLong(2, usuarioTO.getUsCPF());
             ps.setString(3, usuarioTO.getEmailUsuario());
             ps.setString(4, usuarioTO.getSenhaUsuario());
-            ps.setInt(1, usuarioTO.getIdUsuario());
+            ps.setInt(5, usuarioTO.getIdUsuario());
             if (ps.executeUpdate() > 0) {
                 return usuarioTO;
             }
@@ -52,6 +52,7 @@ public class UsuarioDAO extends Repository{
         }
         return null;
     }
+
     public boolean excluir(int idUsuario) {
         String sql = "delete from T_CS_USUARIO where id_usuario=?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql);){

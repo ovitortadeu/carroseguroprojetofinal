@@ -42,11 +42,14 @@ public class UsuarioResource {
     public Response alterar(@Valid UsuarioTO usuarioTO, @PathParam("idUsuario") int idUsuario) {
         usuarioTO.setIdUsuario(idUsuario);
         UsuarioTO resultado = usuarioBO.alterar(usuarioTO);
+        Response.ResponseBuilder response = null;
         if (resultado != null) {
-            return Response.ok(resultado).build(); // 200 OK com o usuário atualizado
+            response = Response.created(null); //201 - CREATED
         } else {
-            return Response.status(400).entity("Erro ao atualizar usuário").build(); // 400 BAD REQUEST
+            response = Response.status(400);
         }
+        response.entity(resultado);
+        return response.build();
     }
 
     @DELETE
