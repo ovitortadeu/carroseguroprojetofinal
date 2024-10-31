@@ -38,7 +38,7 @@ public class CarroResource {
         if (resultado != null) {
             response = Response.created(null); //201 CREATED
         } else{
-            response = Response.status(400); // BAD REQUEST
+            response = Response.status(400); // 400 BAD REQUEST
         }
         response.entity(resultado);
         return response.build();

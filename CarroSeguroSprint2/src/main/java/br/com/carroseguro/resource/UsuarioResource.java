@@ -1,8 +1,6 @@
 package br.com.carroseguro.resource;
 
-import br.com.carroseguro.bo.CidadeBO;
 import br.com.carroseguro.bo.UsuarioBO;
-import br.com.carroseguro.to.CidadeTO;
 import br.com.carroseguro.to.UsuarioTO;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
