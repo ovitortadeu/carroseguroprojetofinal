@@ -62,7 +62,7 @@ public class TelefoneUsuarioResoure {
     }
 
     @DELETE
-    @Path("/idTel")
+    @Path("/{idTel}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response excluir(@PathParam("idTel") int idTel) {
         Response.ResponseBuilder response = null;

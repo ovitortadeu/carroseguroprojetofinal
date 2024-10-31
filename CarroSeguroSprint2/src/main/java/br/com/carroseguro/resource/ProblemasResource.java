@@ -62,7 +62,7 @@ public class ProblemasResource {
     }
 
     @DELETE
-    @Path("/idProblemas")
+    @Path("/{idProblemas}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response excluir(@PathParam("idProblemas") int idProblema) {
         Response.ResponseBuilder response = null;

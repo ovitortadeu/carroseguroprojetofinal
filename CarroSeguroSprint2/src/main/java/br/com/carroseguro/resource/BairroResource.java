@@ -38,7 +38,7 @@ public class BairroResource {
         if (resultado != null) {
             response = Response.created(null); //201 CREATED
         } else{
-            response = Response.status(400); // BAD REQUEST
+            response = Response.status(400); // 400 BAD REQUEST
         }
         response.entity(resultado);
         return response.build();
@@ -62,7 +62,7 @@ public class BairroResource {
     }
 
     @DELETE
-    @Path("/idBairro")
+    @Path("/{idBairro}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response excluir(@PathParam("idBairro") int idBairro) {
         Response.ResponseBuilder response = null;
