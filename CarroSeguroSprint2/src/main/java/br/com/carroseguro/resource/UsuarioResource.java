@@ -60,7 +60,7 @@ public class UsuarioResource {
     }
 
     @DELETE
-    @Path("/{idUsuario}")
+    @Path("/usuario/{idUsuario}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response excluir(@PathParam("idUsuario") int idUsuario) {
         Response.ResponseBuilder response = null;
@@ -73,7 +73,7 @@ public class UsuarioResource {
     }
 
     @GET
-    @Path("/{idUsuario}")
+    @Path("/usuario/{idUsuario}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response vizualizarPeloCodigo(@PathParam("idUsuario") int idUsuario) {
         UsuarioTO resultado = usuarioBO.vizualizarPeloCodigo(idUsuario);
