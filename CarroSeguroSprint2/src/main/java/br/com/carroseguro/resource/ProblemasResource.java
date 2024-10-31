@@ -44,7 +44,7 @@ public class ProblemasResource {
 
 
     @PUT
-    @Path("/{idProblemas}")
+    @Path("/problemas/{idProblemas}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response alterar(@Valid ProblemasTO problemasTO, @PathParam("idProblemas") int idProblemas) {
         problemasTO.setIdProblema(idProblemas);
@@ -60,7 +60,7 @@ public class ProblemasResource {
     }
 
     @DELETE
-    @Path("/{idProblemas}")
+    @Path("/problemas/{idProblemas}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response excluir(@PathParam("idProblemas") int idProblema) {
         Response.ResponseBuilder response = null;
