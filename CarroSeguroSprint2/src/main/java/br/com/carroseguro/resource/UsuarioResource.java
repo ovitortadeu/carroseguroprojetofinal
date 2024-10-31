@@ -44,7 +44,7 @@ public class UsuarioResource {
 
 
     @PUT
-    @Path("/{idUsuario}")
+    @Path("/usuario/{idUsuario}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response alterar(@Valid UsuarioTO usuarioTO, @PathParam("idUsuario") int idUsuario) {
         usuarioTO.setIdUsuario(idUsuario);
