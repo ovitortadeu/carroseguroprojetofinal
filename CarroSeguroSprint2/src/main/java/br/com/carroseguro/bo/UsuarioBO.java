@@ -1,8 +1,6 @@
 package br.com.carroseguro.bo;
 
-import br.com.carroseguro.dao.BairroDAO;
 import br.com.carroseguro.dao.UsuarioDAO;
-import br.com.carroseguro.to.BairroTO;
 import br.com.carroseguro.to.UsuarioTO;
 
 import java.sql.SQLException;
@@ -43,14 +41,10 @@ public class UsuarioBO {
      */
     public UsuarioTO inserir(UsuarioTO usuarioTO) throws SQLException {
         usuarioDAO = new UsuarioDAO();
-
-        // Verifica se o email já está cadastrado
         if (usuarioDAO.emailExistente(usuarioTO.getEmailUsuario())) {
             System.out.println("Email já cadastrado!");
             return null;
         }
-
-        // Obtem novo ID e insere o usuário
         usuarioTO.setIdUsuario(usuarioDAO.obterNovoIdUsuario(usuarioTO));
         return usuarioDAO.inserir(usuarioTO);
     }

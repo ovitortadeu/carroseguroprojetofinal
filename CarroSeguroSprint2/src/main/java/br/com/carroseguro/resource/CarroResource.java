@@ -1,9 +1,7 @@
 package br.com.carroseguro.resource;
 
 import br.com.carroseguro.bo.CarroBO;
-import br.com.carroseguro.bo.CidadeBO;
 import br.com.carroseguro.to.CarroTO;
-import br.com.carroseguro.to.CidadeTO;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -38,7 +36,7 @@ public class CarroResource {
         if (resultado != null) {
             response = Response.created(null); //201 CREATED
         } else{
-            response = Response.status(400); // 400 BAD REQUEST
+            response = Response.status(400); // 400 \BAD REQUEST
         }
         response.entity(resultado);
         return response.build();

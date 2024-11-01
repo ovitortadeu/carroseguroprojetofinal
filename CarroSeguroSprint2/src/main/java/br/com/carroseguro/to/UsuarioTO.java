@@ -1,11 +1,18 @@
 package br.com.carroseguro.to;
 
+import jakarta.validation.constraints.NotNull;
+
 public class UsuarioTO {
 
-    private int idUsuario;
+    @NotNull
+    private Integer idUsuario;
+    @NotNull
     private Long usCPF;
+    @NotNull
     private String nmUsuario;
+    @NotNull
     private String emailUsuario;
+    @NotNull
     private String senhaUsuario;
 
     public UsuarioTO() {

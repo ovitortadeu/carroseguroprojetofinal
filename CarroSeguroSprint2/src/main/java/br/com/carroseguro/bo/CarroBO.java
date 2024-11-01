@@ -1,8 +1,6 @@
 package br.com.carroseguro.bo;
 
-import br.com.carroseguro.dao.BairroDAO;
 import br.com.carroseguro.dao.CarroDAO;
-import br.com.carroseguro.to.BairroTO;
 import br.com.carroseguro.to.CarroTO;
 import br.com.carroseguro.to.UsuarioTO;
 

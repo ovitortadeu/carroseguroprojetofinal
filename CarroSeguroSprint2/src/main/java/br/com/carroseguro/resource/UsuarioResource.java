@@ -68,7 +68,7 @@ public class UsuarioResource {
     public Response vizualizarPeloCodigo(@PathParam("idUsuario") int idUsuario) {
         UsuarioTO resultado = usuarioBO.vizualizarPeloCodigo(idUsuario);
         if (resultado != null) {
-            return Response.ok(resultado).build(); // 200 OK com o usuário encontrado
+            return Response.ok(resultado).build(); // 200 OK
         } else {
             return Response.status(404).entity("Usuário não encontrado").build(); // 404 NOT FOUND
         }

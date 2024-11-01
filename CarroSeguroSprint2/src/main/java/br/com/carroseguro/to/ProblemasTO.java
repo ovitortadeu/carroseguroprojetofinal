@@ -9,31 +9,22 @@ import java.util.*;
 
 public class ProblemasTO {
 
-    // ID do carro deve ser positivo.
     @Positive
     private int idProblema;
-
-    @PositiveOrZero // Substitui @NotNull pois um problema pode ter valor zero ou positivo.
-    private int vlProblema;
-
-    @NotBlank // Nome não pode ser vazio ou nulo, semelhante ao atributo 'nome' do exemplo.
-    private String nmProblema;
-
-    @NotBlank // Tipo de peça do problema também não pode ser vazio ou nulo.
-    private String tpPecaProblema;
-
-    private String dcProblema; // Pode ser opcional, não precisa de validação.
-
-    @Positive // ID do carro deve ser positivo.
+    @Positive
     private int idCarro;
+    @NotBlank
+    private String tpPecaProblema;
+    @NotBlank
+    private String dcProblema;
+
+
 
     public ProblemasTO() {
     }
 
-    public ProblemasTO(int idProblema, int vlProblema, String nmProblema, String tpPecaProblema, String dcProblema, int idCarro) {
+    public ProblemasTO(int idProblema, String tpPecaProblema, String dcProblema, int idCarro) {
         this.idProblema = idProblema;
-        this.vlProblema = vlProblema;
-        this.nmProblema = nmProblema;
         this.tpPecaProblema = tpPecaProblema;
         this.dcProblema = dcProblema;
         this.idCarro = idCarro;
@@ -45,22 +36,6 @@ public class ProblemasTO {
 
     public void setIdProblema(int idProblema) {
         this.idProblema = idProblema;
-    }
-
-    public int getVlProblema() {
-        return vlProblema;
-    }
-
-    public void setVlProblema(int vlProblema) {
-        this.vlProblema = vlProblema;
-    }
-
-    public String getNmProblema() {
-        return nmProblema;
-    }
-
-    public void setNmProblema(String nmProblema) {
-        this.nmProblema = nmProblema;
     }
 
     public String getTpPecaProblema() {
