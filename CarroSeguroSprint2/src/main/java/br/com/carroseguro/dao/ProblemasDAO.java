@@ -26,25 +26,21 @@ public class ProblemasDAO extends Repository{
 
 
     public ArrayList<ProblemasTO> listarTodos() {
-        String sql = "select * from T_CS_PROBLEMAS order by id_problema";
-        ArrayList<ProblemasTO> listaProblemaTO = new ArrayList<ProblemasTO>();
-        try(PreparedStatement ps = getConnection().prepareStatement(sql);) {
+        String sql = "SELECT * FROM T_CS_PROBLEMAS ORDER BY id_problema";
+        ArrayList<ProblemasTO> listaProblemaTO = new ArrayList<>();
+        try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();
-            if (rs != null) {
-                while (rs.next()) {
-                    ProblemasTO problemasTO = new ProblemasTO();
-                    problemasTO.setIdProblema(rs.getInt("id_problema"));
-                    problemasTO.setIdCarro(rs.getInt("t_cs_carro_id_carro"));
-                    problemasTO.setDcProblema(rs.getString("dc_problema"));
-                    problemasTO.setTpPecaProblema(rs.getString("tp_peca_problema"));
-                    listaProblemaTO.add(problemasTO);
-                }
-                return listaProblemaTO;
-            } else{
-                return null;
+            while (rs.next()) {
+                ProblemasTO problemasTO = new ProblemasTO();
+                problemasTO.setIdProblema(rs.getInt("id_problema"));
+                problemasTO.setIdCarro(rs.getInt("t_cs_carro_id_carro"));
+                problemasTO.setTpPecaProblema(rs.getString("tp_peca_problema"));
+                problemasTO.setDcProblema(rs.getString("dc_problema"));
+                listaProblemaTO.add(problemasTO);
             }
+            return listaProblemaTO;
         } catch (SQLException e) {
-            System.out.println("Erro de SQL: " + e.getMessage());
+            System.out.println("Erro de SQL ao listar: " + e.getMessage());
             return null;
         }
     }
@@ -57,6 +53,7 @@ public class ProblemasDAO extends Repository{
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 problema.setIdProblema(rs.getInt("id_problema"));
+                problema.setIdCarro(rs.getInt("t_cs_carro_id_carro"));
                 problema.setTpPecaProblema(rs.getString("tp_peca_problema"));
                 problema.setDcProblema(rs.getString("dc_problema"));
             } else {
