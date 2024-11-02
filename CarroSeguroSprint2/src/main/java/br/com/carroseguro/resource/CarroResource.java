@@ -2,11 +2,14 @@ package br.com.carroseguro.resource;
 
 import br.com.carroseguro.bo.CarroBO;
 import br.com.carroseguro.to.CarroTO;
+import br.com.carroseguro.to.ProblemasTO;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -30,17 +33,20 @@ public class CarroResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response inserir(@Valid CarroTO carro) throws SQLException {
         CarroTO resultado = carroBO.inserir(carro);
         Response.ResponseBuilder response = null;
         if (resultado != null) {
             response = Response.created(null); //201 CREATED
         } else{
-            response = Response.status(400); // 400 \BAD REQUEST
+            response = Response.status(400); // BAD REQUEST
         }
         response.entity(resultado);
         return response.build();
+
     }
+
 
 
     @PUT

@@ -1,16 +1,16 @@
 package br.com.carroseguro.to;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 
 public class CarroTO {
-    @NotNull @Positive
+    
     private Integer idCarro;
-    @NotNull
+
     private String marcaCarro;
-    @NotNull
+
     private String modeloCarro;
-    @NotNull
+
     private Integer idUsuario;
 
     public CarroTO() {

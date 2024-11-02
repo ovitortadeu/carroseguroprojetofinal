@@ -2,38 +2,42 @@ package br.com.carroseguro.dao;
 
 import br.com.carroseguro.to.CarroTO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class CarroDAO extends Repository{
 
     public CarroTO inserir(CarroTO carroTO) {
-        String sql = "insert into T_CS_CARRO(id_carro, mc_carro, md_carro, T_CS_USUARIO_ID_USUARIO) values(?,?,?,?)";
-        try (PreparedStatement ps = getConnection().prepareStatement(sql);) {
-            ps.setInt(1, carroTO.getIdCarro());
-            ps.setString(2, carroTO.getMarcaCarro());
-            ps.setString(3, carroTO.getModeloCarro());
-            ps.setInt(4, carroTO.getIdUsuario());
+        String sql = "insert into T_CS_CARRO(mc_carro, md_carro, T_CS_USUARIO_ID_USUARIO) values(?, ?, ?)";
+        try (PreparedStatement ps = getConnection().prepareStatement(sql, new String[]{"ID_CARRO"})) {
+            ps.setString(1, carroTO.getMarcaCarro());
+            ps.setString(2, carroTO.getModeloCarro());
+            ps.setInt(3, carroTO.getIdUsuario());
             if (ps.executeUpdate() > 0) {
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        carroTO.setIdCarro(rs.getInt(1));
+                    }
+                }
                 return carroTO;
             }
         } catch (SQLException e) {
-                System.out.println("Erro de SQL ao inserir: " + e.getMessage());
-            } finally {
-                closeConnection();
-            }
-            return null;
+            System.out.println("Erro de SQL ao inserir: " + e.getMessage());
+        } finally {
+            closeConnection();
         }
+        return null;
+    }
+
+
+
 
     public CarroTO alterar(CarroTO carroTO) {
-        String sql = "update T_CS_CARRO set md_carro=?, mc_carro=?, t_cs_usuario_id_usuario where id_carro=?";
+        String sql = "UPDATE T_CS_CARRO SET md_carro=?, mc_carro=?, t_cs_usuario_id_usuario=? WHERE id_carro=?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql);) {
             ps.setString(1, carroTO.getModeloCarro());
-            ps.setString(2, carroTO.getModeloCarro());
-            ps.setInt(3, carroTO.getIdCarro());
+            ps.setString(2, carroTO.getMarcaCarro());
+            ps.setInt(3, carroTO.getIdUsuario());
             ps.setInt(4, carroTO.getIdCarro());
             if (ps.executeUpdate() > 0) {
                 return carroTO;
@@ -68,6 +72,7 @@ public class CarroDAO extends Repository{
                 while (rs.next()) {
                     CarroTO carroTO = new CarroTO();
                     carroTO.setIdCarro(rs.getInt("id_carro"));
+                    carroTO.setIdUsuario(rs.getInt("t_cs_usuario_id_usuario"));
                     carroTO.setModeloCarro(rs.getString("md_carro"));
                     carroTO.setMarcaCarro(rs.getString("mc_carro"));
                     listaCarroTO.add(carroTO);
@@ -82,18 +87,6 @@ public class CarroDAO extends Repository{
         }
     }
 
-    public int obterNovoIdCarro(CarroTO carroTO) throws SQLException {
-        String sql = "SELECT MAX(id_carro) FROM T_CS_CARRO";
-        PreparedStatement stmt = getConnection().prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) {
-            return rs.getInt(1) + 1;
-        } else {
-            return 1;
-        }
-
-
-    }
 }
 
 

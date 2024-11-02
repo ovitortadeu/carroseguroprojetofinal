@@ -10,36 +10,6 @@ import java.util.ArrayList;
 public class CarroBO {
     CarroDAO carroDAO;
 
-    /**
-     * Valida os dados de um objeto {@link CarroTO}.
-     * <p>
-     * Este método verifica se os atributos do carro respeitam as seguintes regras:
-     * <ul>
-     *   <li>O modelo do carro não pode exceder 20 caracteres.</li>
-     *   <li>A marca do carro deve ter no máximo 20 caracteres.</li>
-     * </ul>
-     * </p>
-     *
-     * @param carroTO O objeto {@link CarroTO} que contém os dados do carro a serem validados.
-     * @return {@code true} se todos os atributos forem válidos; {@code false} caso contrário.
-     */
-    public boolean validarCarro(CarroTO carroTO){
-        try {
-            if (carroTO.getModeloCarro().length() > 20) {
-                System.out.println("Erro: Modelo do carro não pode ter acima de 20 letras!");
-                return false;
-            } else if (carroTO.getMarcaCarro().length() > 20) {
-                System.out.println("Erro: Nome da marca do carro não pode ter mais de 20 letras!");
-                return false;
-            }
-            return true;
-        } catch (Exception e) {
-            System.out.println("Erro geral: " + e.getMessage());
-            return false;
-        }
-    }
-
-
 
     /**
      * Retorna uma lista contendo todos os carros cadastrados.
@@ -74,17 +44,7 @@ public class CarroBO {
      */
     public CarroTO inserir(CarroTO carroTO) throws SQLException {
         carroDAO = new CarroDAO();
-        UsuarioTO usuario = new UsuarioTO();
-        carroTO.setIdUsuario(usuario.getIdUsuario());
-        carroTO.setIdCarro(carroDAO.obterNovoIdCarro(carroTO));
-        try {
-            if (validarCarro(carroTO)) {
-                return carroDAO.inserir(carroTO);
-            }
-        } catch (Exception e) {
-            System.out.println("Erro geral: " + e.getMessage());
-        }
-        return null;
+        return carroDAO.inserir(carroTO);
     }
 
     /**
@@ -119,13 +79,7 @@ public class CarroBO {
      */
     public CarroTO alterar(CarroTO carroTO) {
         carroDAO = new CarroDAO();
-        try {
-            if (validarCarro(carroTO)) {
-                return carroDAO.alterar(carroTO);
-            }
-        } catch (Exception e) {
-            System.out.println("Erro geral: " + e.getMessage());
-        }
-        return null;
+        // sem regras de negócio significativas para alteração
+        return carroDAO.alterar(carroTO);
     }
 }

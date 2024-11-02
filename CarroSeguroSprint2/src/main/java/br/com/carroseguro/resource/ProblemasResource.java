@@ -2,7 +2,6 @@ package br.com.carroseguro.resource;
 
 import br.com.carroseguro.bo.ProblemasBO;
 import br.com.carroseguro.to.ProblemasTO;
-import br.com.carroseguro.to.UsuarioTO;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;

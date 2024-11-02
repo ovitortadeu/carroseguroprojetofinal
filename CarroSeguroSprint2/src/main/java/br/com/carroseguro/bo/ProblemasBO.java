@@ -45,8 +45,6 @@ public class ProblemasBO {
      */
     public ProblemasTO inserir(ProblemasTO problemasTO) throws SQLException {
         problemasDAO = new ProblemasDAO();
-        CarroTO crrTO = new CarroTO();
-        problemasTO.setIdCarro(crrTO.getIdCarro());
         return problemasDAO.inserir(problemasTO);
     }
 

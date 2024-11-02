@@ -1,7 +1,6 @@
 package br.com.carroseguro.resource;
 
 import br.com.carroseguro.bo.PecasBO;
-import br.com.carroseguro.to.MecanicoTO;
 import br.com.carroseguro.to.PecasTO;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
