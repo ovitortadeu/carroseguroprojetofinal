@@ -3,6 +3,7 @@ package br.com.carroseguro.resource;
 import br.com.carroseguro.bo.CarroBO;
 import br.com.carroseguro.to.CarroTO;
 import br.com.carroseguro.to.ProblemasTO;
+import br.com.carroseguro.to.UsuarioTO;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -75,6 +76,21 @@ public class CarroResource {
         } else {
             response = Response.status(404); // 404 NOT FOUND
         }
+        return response.build();
+    }
+
+    @GET
+    @Path("/{idCarro}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response vizualizarPeloCodigo(@PathParam("idCarro") int idCarro) {
+        CarroTO resultado = carroBO.vizualizarPeloCodigo(idCarro);
+        Response.ResponseBuilder response = null;
+        if (resultado != null) {
+            response = Response.ok(); // 200
+        } else {
+            response = Response.status(404);// 404 NOT FOUND
+        }
+        response.entity(resultado);
         return response.build();
     }
 }

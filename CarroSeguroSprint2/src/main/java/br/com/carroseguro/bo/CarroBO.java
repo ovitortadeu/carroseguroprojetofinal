@@ -82,4 +82,11 @@ public class CarroBO {
         // sem regras de negócio significativas para alteração
         return carroDAO.alterar(carroTO);
     }
+
+    public CarroTO vizualizarPeloCodigo(int idCarro) {
+        carroDAO = new CarroDAO();
+
+        return carroDAO.vizualizarPeloCodigo(idCarro);
+    }
+
 }

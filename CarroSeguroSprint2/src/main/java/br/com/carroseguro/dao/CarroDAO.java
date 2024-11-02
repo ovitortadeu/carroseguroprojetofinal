@@ -1,6 +1,7 @@
 package br.com.carroseguro.dao;
 
 import br.com.carroseguro.to.CarroTO;
+import br.com.carroseguro.to.ProblemasTO;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class CarroDAO extends Repository{
         }
         return null;
     }
-    
+
     public CarroTO alterar(CarroTO carroTO) {
         String sql = "UPDATE T_CS_CARRO SET md_carro=?, mc_carro=?, t_cs_usuario_id_usuario=? WHERE id_carro=?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql);) {
@@ -82,6 +83,27 @@ public class CarroDAO extends Repository{
             System.out.println("Erro de SQL: " + e.getMessage());
             return null;
         }
+    }
+    public CarroTO vizualizarPeloCodigo(int idCarro) {
+        CarroTO carro = new CarroTO();
+        String sql = "select * from T_CS_CARRO where id_carro=?";
+        try (PreparedStatement ps = getConnection().prepareStatement(sql);){
+            ps.setInt(1, idCarro);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                carro.setIdCarro(rs.getInt("id_carro"));
+                carro.setIdUsuario(rs.getInt("t_cs_usuario_id_usuario"));
+                carro.setModeloCarro(rs.getString("md_carro"));
+                carro.setMarcaCarro(rs.getString("mc_carro"));
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro de SQL ao mostrar problema: " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return carro;
     }
 
 }
