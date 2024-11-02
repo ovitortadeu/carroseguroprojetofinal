@@ -18,11 +18,11 @@ public class ProblemasBO {
      *
      * <p>
      * Este método não realiza validações ou regras de negócios específicas,
-     * apenas recupera e retorna todos os registros de bairros armazenados
+     * apenas recupera e retorna todos os registros de problemas armazenados
      * no banco de dados.
      * </p>
      *
-     * @return uma lista de objetos {@code BairroTO} representando todos os logradouros cadastrados
+     * @return uma lista de objetos {@link ProblemasTO} representando todos os problemas cadastrados
      */
     public ArrayList<ProblemasTO> listarTodos() {
         problemasDAO = new ProblemasDAO();
@@ -32,16 +32,11 @@ public class ProblemasBO {
 
     /**
      * Insere um objeto {@link ProblemasTO} no banco de dados.
-     * <p>
-     * Este método utilizaa instância de {@link ProblemasDAO} para inserir o problema do carro
-     * no banco de dados Caso ocorra alguma exceção durante o processo, o método captura a exceção
-     * e retorna {@code null}. Também instancia a classe de {@link CarroTO} para capturar o id da ForeignKey,
-     * e usa o método de gerar um novo Id para a primaryKey do banco de dados.
-     * </p>
      *
      * @param problemasTO O objeto {@link ProblemasTO} que contém os dados do problema a ser inserido.
      * @return O objeto {@link ProblemasTO} inserido, caso a operação seja bem-sucedida;
-     * {@code null} se os dados forem inválidos ou ocorrer uma exceção.
+     *         {@code null} se os dados forem inválidos ou ocorrer uma exceção.
+     * @throws SQLException se ocorrer um erro ao inserir o problema no banco de dados.
      */
     public ProblemasTO inserir(ProblemasTO problemasTO) throws SQLException {
         problemasDAO = new ProblemasDAO();
@@ -49,11 +44,16 @@ public class ProblemasBO {
     }
 
     /**
-     * Retorna um objeto ProblemasTO com base no código (ID) do problema fornecido.
+     * Retorna um objeto {@link ProblemasTO} com base no código (ID) do problema fornecido.
+     *
+     * <p>
+     * Este método recupera as informações do problema correspondente ao ID fornecido.
+     * </p>
      *
      * @param idProblema o código único do problema que se deseja visualizar
-     * @return um objeto ProblemasTO que contém as informações do problema correspondente
-     * @throws IllegalArgumentException se o ID do problema for inválido (por exemplo, negativo)
+     * @return um objeto {@link ProblemasTO} que contém as informações do problema correspondente,
+     *         ou {@code null} se o problema não for encontrado.
+     * @throws IllegalArgumentException se o ID do problema for inválido (por exemplo, negativo).
      */
     public ProblemasTO vizualizarPeloCodigo (int idProblema) {
         problemasDAO = new ProblemasDAO();

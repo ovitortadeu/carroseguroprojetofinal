@@ -30,17 +30,11 @@ public class CarroBO {
 
     /**
      * Insere um objeto {@link CarroTO} no banco de dados após validação.
-     * <p>
-     * Este método valida os dados do carro e, se forem válidos, utiliza
-     * a instância de {@link CarroDAO} para inserir o carro no banco de dados.
-     * Caso ocorra alguma exceção durante o processo, o método captura a exceção e retorna {@code null}.
-     * Método também instancia a classe de Usuario, para capturar o idUsuario e usa o método de gerar novo ID.
-     * que é uma ForeignKey na tabela de Usuario.
-     * </p>
      *
      * @param carroTO O objeto {@link CarroTO} que contém os dados do carro a serem inseridos.
      * @return O objeto {@link CarroTO} inserido, caso a operação seja bem-sucedida;
      *         {@code null} se os dados forem inválidos ou ocorrer uma exceção.
+     * @throws SQLException se ocorrer um erro ao inserir o carro no banco de dados.
      */
     public CarroTO inserir(CarroTO carroTO) throws SQLException {
         carroDAO = new CarroDAO();
@@ -67,11 +61,6 @@ public class CarroBO {
 
     /**
      * Altera os dados de um objeto {@link CarroTO} no banco de dados após validação.
-     * <p>
-     * Este método valida os dados do carro e, se forem válidos, utiliza
-     * a instância de {@link CarroDAO} para atualizar o carro no banco de dados.
-     * Caso ocorra alguma exceção durante o processo, o método captura a exceção e retorna {@code null}.
-     * </p>
      *
      * @param carroTO O objeto {@link CarroTO} que contém os dados atualizados do carro.
      * @return O objeto {@link CarroTO} atualizado, caso a operação seja bem-sucedida;
@@ -83,6 +72,17 @@ public class CarroBO {
         return carroDAO.alterar(carroTO);
     }
 
+    /**
+     * Visualiza um carro no banco de dados com base no seu código.
+     *
+     * <p>
+     * Este método recupera os dados de um carro específico utilizando o ID fornecido.
+     * </p>
+     *
+     * @param idCarro o ID do carro a ser visualizado
+     * @return O objeto {@link CarroTO} correspondente ao ID fornecido,
+     *         ou {@code null} se o carro não for encontrado.
+     */
     public CarroTO vizualizarPeloCodigo(int idCarro) {
         carroDAO = new CarroDAO();
 

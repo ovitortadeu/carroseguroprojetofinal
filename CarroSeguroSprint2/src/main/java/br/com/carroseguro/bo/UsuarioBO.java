@@ -15,11 +15,11 @@ public class UsuarioBO {
      *
      * <p>
      * Este método não realiza validações ou regras de negócios específicas,
-     * apenas recupera e retorna todos os registros de bairros armazenados
+     * apenas recupera e retorna todos os registros de usuários armazenados
      * no banco de dados.
      * </p>
      *
-     * @return uma lista de objetos {@code UsuarioTO} representando todos os usuários cadastrados
+     * @return uma lista de objetos {@link UsuarioTO} representando todos os usuários cadastrados
      */
     public ArrayList<UsuarioTO> listarTodos() {
         usuarioDAO = new UsuarioDAO();
@@ -70,7 +70,7 @@ public class UsuarioBO {
      * a exclusão do registro correspondente ao ID informado.
      * </p>
      *
-     * @param idUsuario o ID do bairro que será excluído
+     * @param idUsuario o ID do usuário que será excluído
      * @return {@code true} se a exclusão for bem-sucedida, {@code false} caso contrário
      */
     public boolean excluir (int idUsuario) {
@@ -80,14 +80,17 @@ public class UsuarioBO {
     }
 
     /**
-     * Altera os dados de um objeto {@link UsuarioTO} no banco de dados após validação.
+     * Altera os dados de um objeto {@link UsuarioTO} no banco de dados.
+     *
      * <p>
-     * Este método valida os dados do usuário utiliza a instância de {@link UsuarioDAO}
-     * para atualizar o usuário no banco de dados.
+     * Este método utiliza a instância de {@link UsuarioDAO}
+     * para atualizar o usuário no banco de dados. Não há validações adicionais
+     * ou regras de negócios aplicadas.
      * </p>
      *
      * @param usuarioTO O objeto {@link UsuarioTO} que contém os dados atualizados do usuário.
      * @return O objeto {@link UsuarioTO} atualizado, caso a operação seja bem-sucedida;
+     *         {@code null} se a operação falhar.
      */
     public UsuarioTO alterar(UsuarioTO usuarioTO) {
         usuarioDAO = new UsuarioDAO();
