@@ -28,7 +28,7 @@ public class MecanicoResource {
 
 
     @GET
-    @Path("/{idProblema}")
+    @Path("/{idMecanico}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response vizualizarPeloCodigo(@PathParam("idMecanico") int idMecanico) {
         MecanicoTO resultado = mecanicoBO.vizualizarPeloCodigo(idMecanico);
