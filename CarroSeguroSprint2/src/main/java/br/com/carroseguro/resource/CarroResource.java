@@ -34,7 +34,6 @@ public class CarroResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response inserir(@Valid CarroTO carro) throws SQLException {
         CarroTO resultado = carroBO.inserir(carro);
         Response.ResponseBuilder response = null;
