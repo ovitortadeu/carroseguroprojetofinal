@@ -28,16 +28,11 @@ public class UsuarioBO {
     }
 
     /**
-     * Insere um novo usuário no sistema, verificando se o email do usuário já está cadastrado.
-     * <p>
-     * Caso o email já exista no sistema, o método não insere o usuário e retorna {@code null}.
-     * Se o email não estiver cadastrado, o método obtém um novo ID para o usuário e realiza a inserção.
-     * </p>
+     * Insere um novo usuário no banco de dados, verificando previamente se o email já está cadastrado.
      *
-     * @param usuarioTO um objeto {@link UsuarioTO} contendo as informações do usuário a ser inserido.
-     * @return o objeto {@link UsuarioTO} com o ID gerado se a inserção for bem-sucedida,
-     *         ou {@code null} se o email já estiver cadastrado.
-     * @throws SQLException se ocorrer um erro de acesso ao banco de dados durante a inserção.
+     * @param usuarioTO Um objeto {@link UsuarioTO} que contém os dados do usuário a ser inserido.
+     * @return O objeto {@link UsuarioTO} inserido no banco de dados, ou {@code null} se o email já estiver cadastrado.
+     * @throws SQLException Se ocorrer um erro durante a operação de inserção no banco de dados.
      */
     public UsuarioTO inserir(UsuarioTO usuarioTO) throws SQLException {
         usuarioDAO = new UsuarioDAO();
@@ -45,7 +40,6 @@ public class UsuarioBO {
             System.out.println("Email já cadastrado!");
             return null;
         }
-        usuarioTO.setIdUsuario(usuarioDAO.obterNovoIdUsuario(usuarioTO));
         return usuarioDAO.inserir(usuarioTO);
     }
 

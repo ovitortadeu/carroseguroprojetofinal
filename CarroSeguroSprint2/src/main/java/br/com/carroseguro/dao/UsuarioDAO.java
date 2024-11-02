@@ -11,18 +11,17 @@ import java.util.ArrayList;
 public class UsuarioDAO extends Repository{
 
     public UsuarioTO inserir(UsuarioTO usuarioTO) {
-        String sql = "INSERT INTO T_CS_USUARIO(id_usuario, us_cpf, nm_usuario, em_usuario, sn_usuario) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO T_CS_USUARIO(us_cpf, nm_usuario, em_usuario, sn_usuario) VALUES(?,?,?,?)";
         try (PreparedStatement ps = getConnection().prepareStatement(sql)) {
-            ps.setInt(1, usuarioTO.getIdUsuario());
-            ps.setBigDecimal(2, new BigDecimal(usuarioTO.getUsCPF()));
-            ps.setString(3, usuarioTO.getNmUsuario());
-            ps.setString(4, usuarioTO.getEmailUsuario());
-            ps.setString(5, usuarioTO.getSenhaUsuario());
+            ps.setBigDecimal(1, new BigDecimal(usuarioTO.getUsCPF()));
+            ps.setString(2, usuarioTO.getNmUsuario());
+            ps.setString(3, usuarioTO.getEmailUsuario());
+            ps.setString(4, usuarioTO.getSenhaUsuario());
             if (ps.executeUpdate() > 0) {
                 return usuarioTO;
             }
         } catch (SQLException e) {
-            if (e.getErrorCode() == 1) { // Código de erro para duplicidade em Oracle
+            if (e.getErrorCode() == 1) {
                 System.out.println("CPF já cadastrado.");
             } else {
                 System.out.println("Erro de SQL: " + e.getMessage());
@@ -110,17 +109,6 @@ public class UsuarioDAO extends Repository{
         } catch (SQLException e) {
             System.out.println("Erro de SQL: " + e.getMessage());
             return null;
-        }
-    }
-
-    public int obterNovoIdUsuario(UsuarioTO usuarioTO) throws SQLException {
-        String sql = "SELECT MAX(id_usuario) FROM T_CS_USUARIO";
-        PreparedStatement stmt = getConnection().prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) {
-            return rs.getInt(1) + 1;
-        } else {
-            return 1;
         }
     }
 

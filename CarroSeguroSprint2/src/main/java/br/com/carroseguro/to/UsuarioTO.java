@@ -1,16 +1,19 @@
 package br.com.carroseguro.to;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class UsuarioTO {
 
     @NotNull
-    private Integer idUsuario;
+    private int idUsuario;
     @NotNull
-    private Long usCPF;
+    private Long usCPF; // Não pode ser nulo
     @NotNull
-    private String nmUsuario;
-    @NotNull
+    @Size(min = 3, max = 40)
+    private String nmUsuario; // Tamanho mínimo e máximo
+    @Email // Deve ser um email válido
     private String emailUsuario;
     @NotNull
     private String senhaUsuario;

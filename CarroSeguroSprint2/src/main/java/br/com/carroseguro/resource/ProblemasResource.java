@@ -2,6 +2,7 @@ package br.com.carroseguro.resource;
 
 import br.com.carroseguro.bo.ProblemasBO;
 import br.com.carroseguro.to.ProblemasTO;
+import br.com.carroseguro.to.UsuarioTO;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -18,14 +19,11 @@ public class ProblemasResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarTodos() {
         ArrayList<ProblemasTO> resultado = problemasBO.listarTodos();
-        Response.ResponseBuilder response = null;
         if (resultado != null) {
-            response = Response.ok(); // 200 (OK)
+            return Response.ok(resultado).build(); // 200 OK com a lista de usuários
         } else {
-            response = Response.status(404); // 404 (NOT FOUND)
+            return Response.status(404).entity("Problemas não encontrados").build(); // 404 NOT FOUND
         }
-        response.entity(resultado);
-        return response.build();
     }
 
     @POST
@@ -53,7 +51,4 @@ public class ProblemasResource {
             return Response.status(404).entity("Problema não encontrado").build(); // 404 NOT FOUND
         }
     }
-
-
-
 }

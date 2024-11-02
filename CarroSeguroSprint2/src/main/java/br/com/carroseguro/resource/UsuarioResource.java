@@ -1,6 +1,7 @@
 package br.com.carroseguro.resource;
 
 import br.com.carroseguro.bo.UsuarioBO;
+import br.com.carroseguro.dao.UsuarioDAO;
 import br.com.carroseguro.to.UsuarioTO;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -28,11 +29,21 @@ public class UsuarioResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response inserir(@Valid UsuarioTO usuario) throws SQLException {
+        UsuarioDAO userDAO = new UsuarioDAO();
+        if (userDAO.emailExistente(usuario.getEmailUsuario())) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Email já cadastrado!")
+                    .build();
+        }
         UsuarioTO resultado = usuarioBO.inserir(usuario);
         if (resultado != null) {
-            return Response.created(null).entity(resultado).build(); // 201 CREATED com o usuário criado
+            return Response.status(Response.Status.CREATED)
+                    .entity(resultado)
+                    .build();
         } else {
-            return Response.status(400).entity("Erro ao inserir usuário").build(); // 400 BAD REQUEST
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Erro ao inserir usuário.")
+                    .build();
         }
     }
 
@@ -67,10 +78,13 @@ public class UsuarioResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response vizualizarPeloCodigo(@PathParam("idUsuario") int idUsuario) {
         UsuarioTO resultado = usuarioBO.vizualizarPeloCodigo(idUsuario);
+        Response.ResponseBuilder response = null;
         if (resultado != null) {
-            return Response.ok(resultado).build(); // 200 OK
+            response = Response.ok(); // 200
         } else {
-            return Response.status(404).entity("Usuário não encontrado").build(); // 404 NOT FOUND
+             response = Response.status(404);// 404 NOT FOUND
         }
+        response.entity(resultado);
+        return response.build();
     }
 }
