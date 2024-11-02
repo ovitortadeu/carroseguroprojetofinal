@@ -28,10 +28,7 @@ public class CarroDAO extends Repository{
         }
         return null;
     }
-
-
-
-
+    
     public CarroTO alterar(CarroTO carroTO) {
         String sql = "UPDATE T_CS_CARRO SET md_carro=?, mc_carro=?, t_cs_usuario_id_usuario=? WHERE id_carro=?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql);) {
