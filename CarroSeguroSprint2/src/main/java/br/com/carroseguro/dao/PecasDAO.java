@@ -1,8 +1,7 @@
 package br.com.carroseguro.dao;
 
 import br.com.carroseguro.to.PecasTO;
-import br.com.carroseguro.to.ProblemasTO;
-import br.com.carroseguro.to.UsuarioTO;
+
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
