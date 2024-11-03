@@ -33,17 +33,23 @@ A API RESTful oferece as seguintes operações para as entidades `Carro` e `Prob
 
 ### Endpoints Principais
 
+- **Usuario**
+  - `POST /usuario`: Cria um novo usuário.
+  - `GET /carro/{idUsuario}`: Retorna informações de um usuário.
+  - `PUT /usuario/{idUsuario}`: Atualiza informações de um usuário.
+  - `DELETE /usuario/{idUsuario}`: Remove um usuário do sistema.
+
 - **Carro**
   - `POST /carro`: Cria um novo registro de carro.
   - `GET /carro`: Retorna uma lista de todos os carros.
-  - `PUT /{idCarro}`: Atualiza informações de um carro.
-  - `DELETE /{idCarro}`: Remove um carro do sistema.
+  - `PUT /carro/{idCarro}`: Atualiza informações de um carro.
+  - `DELETE /carro/{idCarro}`: Remove um carro do sistema.
 
 - **Problema**
   - `POST /problemas`: Cria um novo problema associado a um carro.
   - `GET /problemas`: Retorna uma lista de todos os problemas.
-  - `PUT /{idProblema}`: Atualiza informações de um problema.
-  - `DELETE /{idProblema}`: Remove um problema do sistema.
+  - `PUT /problemas/{idProblema}`: Atualiza informações de um problema.
+  - `DELETE /problemas/{idProblema}`: Remove um problema do sistema.
 
 ## Estrutura do Projeto
 
