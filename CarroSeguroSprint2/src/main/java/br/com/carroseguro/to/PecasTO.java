@@ -14,38 +14,57 @@ public class PecasTO {
     private Integer preco;
     @NotBlank
     private String descricao;
+    @NotBlank
+    private String tpPecaProblema;
 
-    public PecasTO(int idPeca, int idCarro, int preco, String descricao) {
+    public PecasTO(int idPeca, int idCarro, int preco, String descricao, String tpPecaProblema) {
         this.idPeca = idPeca;
         this.idCarro = idCarro;
         this.preco = preco;
         this.descricao = descricao;
+        this.tpPecaProblema = tpPecaProblema;
     }
 
     public PecasTO() {
     }
-    public int getIdCarro() {
-        return idCarro;
-    }
-    public void setIdCarro(int idCarro) {
-        this.idCarro = idCarro;
-    }
-    public int getIdPeca() {
+
+    public @NotNull Integer getIdPeca() {
         return idPeca;
     }
-    public void setIdPeca(int idPeca) {
+
+    public void setIdPeca(@NotNull Integer idPeca) {
         this.idPeca = idPeca;
     }
-    public int getPreco() {
+
+    public @NotNull Integer getIdCarro() {
+        return idCarro;
+    }
+
+    public void setIdCarro(@NotNull Integer idCarro) {
+        this.idCarro = idCarro;
+    }
+
+    public @NotNull @PositiveOrZero Integer getPreco() {
         return preco;
     }
-    public void setPreco(int preco) {
+
+    public void setPreco(@NotNull @PositiveOrZero Integer preco) {
         this.preco = preco;
     }
-    public String getDescricao() {
+
+    public @NotBlank String getDescricao() {
         return descricao;
     }
-    public void setDescricao(String descricao) {
+
+    public void setDescricao(@NotBlank String descricao) {
         this.descricao = descricao;
+    }
+
+    public @NotBlank String getTpPecaProblema() {
+        return tpPecaProblema;
+    }
+
+    public void setTpPecaProblema(@NotBlank String tpPecaProblema) {
+        this.tpPecaProblema = tpPecaProblema;
     }
 }

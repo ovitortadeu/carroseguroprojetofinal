@@ -23,6 +23,7 @@ public class PecasDAO extends Repository{
                     pecas.setPreco(rs.getInt("preco"));
                     pecas.setDescricao(rs.getString("descricao"));
                     pecas.setIdCarro(rs.getInt("T_CS_CARRO_ID_CARRO"));
+                    pecas.setTpPecaProblema(rs.getString("tp_peca_problema"));
                     listaPecas.add(pecas);
                 }
                 return listaPecas;
@@ -45,6 +46,7 @@ public class PecasDAO extends Repository{
                 peca.setIdPeca(rs.getInt("id_peca"));
                 peca.setPreco(rs.getInt("preco"));
                 peca.setDescricao(rs.getString("descricao"));
+                peca.setTpPecaProblema(rs.getString("tp_peca_problema"));
                 peca.setIdCarro(rs.getInt("T_CS_CARRO_ID_CARRO"));
             } else {
                 return null;
