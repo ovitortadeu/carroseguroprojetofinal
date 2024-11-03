@@ -17,6 +17,7 @@ public class MecanicoDAO extends Repository{
                 while (rs.next()) {
                     MecanicoTO mecanico = new MecanicoTO();
                     mecanico.setIdMecanico(rs.getInt("id_mecanico"));
+                    mecanico.setIdCarro(rs.getInt("T_CS_CARRO_ID_CARRO"));
                     mecanico.setZonaMecanico(rs.getString("zonas_mecanico"));
                     mecanico.setNomeOficina(rs.getString("nome_oficina"));
                     mecanico.setEnderecoOficina(rs.getString("endereco_oficina"));
@@ -40,6 +41,7 @@ public class MecanicoDAO extends Repository{
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 mecanico.setIdMecanico(rs.getInt("id_mecanico"));
+                mecanico.setIdCarro(rs.getInt("T_CS_CARRO_ID_CARRO"));
                 mecanico.setZonaMecanico(rs.getString("zonas_mecanico"));
                 mecanico.setEnderecoOficina(rs.getString("endereco_oficina"));
                 mecanico.setNomeOficina(rs.getString("nome_oficina"));

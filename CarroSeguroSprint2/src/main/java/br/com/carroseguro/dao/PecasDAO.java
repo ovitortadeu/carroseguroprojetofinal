@@ -22,6 +22,7 @@ public class PecasDAO extends Repository{
                     pecas.setIdPeca(rs.getInt("id_peca"));
                     pecas.setPreco(rs.getInt("preco"));
                     pecas.setDescricao(rs.getString("descricao"));
+                    pecas.setIdCarro(rs.getInt("T_CS_CARRO_ID_CARRO"));
                     listaPecas.add(pecas);
                 }
                 return listaPecas;
@@ -36,7 +37,7 @@ public class PecasDAO extends Repository{
 
     public PecasTO vizualizarPeloCodigo(int idPeca) {
         PecasTO peca = new PecasTO();
-        String sql = "select * from T_CS_PECA where id_peca=?";
+        String sql = "select * from T_CS_PECAS where id_peca=?";
         try (PreparedStatement ps = getConnection().prepareStatement(sql);){
             ps.setInt(1, idPeca);
             ResultSet rs = ps.executeQuery();
@@ -44,6 +45,7 @@ public class PecasDAO extends Repository{
                 peca.setIdPeca(rs.getInt("id_peca"));
                 peca.setPreco(rs.getInt("preco"));
                 peca.setDescricao(rs.getString("descricao"));
+                peca.setIdCarro(rs.getInt("T_CS_CARRO_ID_CARRO"));
             } else {
                 return null;
             }
